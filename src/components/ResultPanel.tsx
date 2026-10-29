@@ -21,7 +21,7 @@ const styles: Record<string, CSSProperties> = {
     padding: `${space.xs}px 10px`,
   },
   valueRow: { display: 'flex', alignItems: 'center', gap: space.lg },
-  value: text('display', 54, colors.accent, weights.black),
+  value: { ...text('display', 54, colors.accent, weights.black), transformOrigin: 'center' },
   message: { ...text('mono', 11, colors.textMuted), flex: 1 },
   divider: { height: 1, backgroundColor: colors.border },
 };
@@ -38,7 +38,9 @@ export const ResultPanel = ({ bmi, category }: ResultPanelProps) => (
       <span style={styles.badge}>{category.label}</span>
     </div>
     <div style={styles.valueRow}>
-      <p style={styles.value}>{bmi.toFixed(1)}</p>
+      <p key={bmi.toFixed(1)} style={{ ...styles.value, animation: 'value-pulse 0.5s ease-out' }}>
+        {bmi.toFixed(1)}
+      </p>
       <p style={styles.message}>{category.message}</p>
     </div>
     <div style={styles.divider} />

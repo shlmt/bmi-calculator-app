@@ -25,7 +25,7 @@ interface CalculateButtonProps {
 }
 
 export const CalculateButton = ({ onClick }: CalculateButtonProps) => (
-  <button type="button" style={styles.button} onClick={onClick}>
+  <button type="button" className="calculate-button" style={styles.button} onClick={onClick}>
     CALCULATE BODY
     <img src={chevron} alt="" style={styles.icon} />
   </button>
