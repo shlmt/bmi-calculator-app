@@ -9,11 +9,12 @@ const styles: Record<string, CSSProperties> = {
 
 interface GlitchStripeProps {
   height: number;
+  delay: number;
   count?: number;
 }
 
-export const GlitchStripe = ({ height, count = 20 }: GlitchStripeProps) => (
-  <div style={{ ...styles.stripe, height }} aria-hidden="true">
+export const GlitchStripe = ({ height, delay, count = 20 }: GlitchStripeProps) => (
+  <div style={{ ...styles.stripe, height, animation: `glitch-in 0.3s linear ${delay}s both` }} aria-hidden="true">
     {Array.from({ length: count }, (_, i) => (
       <div key={i} style={styles.cell}>
         <div style={{ ...styles.bar, backgroundColor: i % 2 === 0 ? colors.accent : 'transparent' }} />

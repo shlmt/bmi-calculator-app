@@ -9,7 +9,7 @@ const styles: Record<string, CSSProperties> = {
 
 export const Disclaimer = () => (
   <footer style={styles.root}>
-    <GlitchStripe height={4} />
+    <GlitchStripe height={4} delay={1.2} />
     <p style={styles.text}>* DISCLAIMER: BMI IS A GENERAL SHAPE ESTIMATION SYSTEM. NOT DIAGNOSTIC MEDICAL HARDWARE.</p>
   </footer>
 );

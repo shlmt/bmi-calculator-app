@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { Entrance } from './components/Entrance';
 import { CalculateButton } from './components/CalculateButton';
 import { Disclaimer } from './components/Disclaimer';
 import { GlitchStripe } from './components/GlitchStripe';
@@ -21,6 +22,7 @@ const styles: Record<string, CSSProperties> = {
     gap: space.lg,
   },
   inputs: { display: 'flex', gap: space.md },
+  inputSlot: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' },
 };
 
 const App = () => {
@@ -29,30 +31,44 @@ const App = () => {
   return (
     <div style={styles.page}>
       <main style={styles.app}>
-        <GlitchStripe height={8} />
-        <Header />
-        <HudCard status={category.hudStatus} />
+        <GlitchStripe height={8} delay={0.1} />
+        <Entrance x={-40} delay={0.1} duration={0.5}>
+          <Header />
+        </Entrance>
+        <Entrance scale={0.85} delay={0.2} duration={0.5}>
+          <HudCard status={category.hudStatus} />
+        </Entrance>
         <div style={styles.inputs}>
-          <StepperCard
-            label="WEIGHT"
-            unit="KG"
-            value={weight.value}
-            onIncrement={weight.increment}
-            onDecrement={weight.decrement}
-            cornerRadius={{ borderTopRightRadius: radius.md }}
-          />
-          <StepperCard
-            label="HEIGHT"
-            unit="CM"
-            value={height.value}
-            onIncrement={height.increment}
-            onDecrement={height.decrement}
-            cornerRadius={{ borderTopLeftRadius: radius.md }}
-          />
+          <Entrance y={30} delay={0.4} duration={0.45} style={styles.inputSlot}>
+            <StepperCard
+              label="WEIGHT"
+              unit="KG"
+              value={weight.value}
+              onIncrement={weight.increment}
+              onDecrement={weight.decrement}
+              cornerRadius={{ borderTopRightRadius: radius.md }}
+            />
+          </Entrance>
+          <Entrance y={30} delay={0.5} duration={0.45} style={styles.inputSlot}>
+            <StepperCard
+              label="HEIGHT"
+              unit="CM"
+              value={height.value}
+              onIncrement={height.increment}
+              onDecrement={height.decrement}
+              cornerRadius={{ borderTopLeftRadius: radius.md }}
+            />
+          </Entrance>
         </div>
-        <CalculateButton onClick={calculate} />
-        <ResultPanel bmi={bmi} category={category} />
-        <Disclaimer />
+        <Entrance y={20} scale={0.9} delay={0.65} duration={0.3}>
+          <CalculateButton onClick={calculate} />
+        </Entrance>
+        <Entrance y={40} scale={0.95} delay={0.8} duration={0.5}>
+          <ResultPanel bmi={bmi} category={category} />
+        </Entrance>
+        <Entrance delay={1.1} duration={0.4}>
+          <Disclaimer />
+        </Entrance>
       </main>
     </div>
   );

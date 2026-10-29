@@ -10,3 +10,28 @@ body {
 button {
   font: inherit;
 }
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translate(var(--from-x), var(--from-y)) scale(var(--from-scale));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes glitch-in {
+  0% { opacity: 0; transform: scaleX(0.3); }
+  20% { opacity: 1; }
+  30% { opacity: 0; }
+  40% { opacity: 1; }
+  100% { opacity: 0.6; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}
