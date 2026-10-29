@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import minus from '../assets/minus.svg';
 import plus from '../assets/plus.svg';
+import { useHoldRepeat } from '../hooks/useHoldRepeat';
 import { card, colors, radius, space, text, weights } from '../theme';
 
 const styles: Record<string, CSSProperties> = {
@@ -25,6 +26,8 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: radius.sm,
     backgroundColor: colors.surfaceAlt,
     cursor: 'pointer',
+    touchAction: 'manipulation',
+    userSelect: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -41,20 +44,25 @@ interface StepperCardProps {
   cornerRadius: CSSProperties;
 }
 
-export const StepperCard = ({ label, unit, value, onIncrement, onDecrement, cornerRadius }: StepperCardProps) => (
-  <div style={{ ...styles.root, ...cornerRadius }}>
-    <p style={styles.label}>{label}</p>
-    <div style={styles.valueRow}>
-      <p style={styles.value}>{value}</p>
-      <p style={styles.unit}>{unit}</p>
+export const StepperCard = ({ label, unit, value, onIncrement, onDecrement, cornerRadius }: StepperCardProps) => {
+  const decrementHandlers = useHoldRepeat(onDecrement);
+  const incrementHandlers = useHoldRepeat(onIncrement);
+
+  return (
+    <div style={{ ...styles.root, ...cornerRadius }}>
+      <p style={styles.label}>{label}</p>
+      <div style={styles.valueRow}>
+        <p style={styles.value}>{value}</p>
+        <p style={styles.unit}>{unit}</p>
+      </div>
+      <div style={styles.buttons}>
+        <button type="button" style={styles.button} {...decrementHandlers} aria-label={`Decrease ${label}`}>
+          <img src={minus} alt="" style={styles.icon} />
+        </button>
+        <button type="button" style={styles.button} {...incrementHandlers} aria-label={`Increase ${label}`}>
+          <img src={plus} alt="" style={styles.icon} />
+        </button>
+      </div>
     </div>
-    <div style={styles.buttons}>
-      <button type="button" style={styles.button} onClick={onDecrement} aria-label={`Decrease ${label}`}>
-        <img src={minus} alt="" style={styles.icon} />
-      </button>
-      <button type="button" style={styles.button} onClick={onIncrement} aria-label={`Increase ${label}`}>
-        <img src={plus} alt="" style={styles.icon} />
-      </button>
-    </div>
-  </div>
-);
+  );
+};
